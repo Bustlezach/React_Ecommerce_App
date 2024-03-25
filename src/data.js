@@ -44,15 +44,39 @@ export const categories = [
 export const popularProducts = [
   {
     id: 0,
-    img: 'https://i.ibb.co/gVgQHXf/the-nix-company-4-Hmj9gky-M6c-unsplash.jpg',
+    img: 'https://i.ibb.co/RNL1VpS/max-titov-Mhktr6d-FD3-I-unsplash.jpg',
   },
   {
     id: 1,
-    img: 'https://i.ibb.co/XZDmNkB/tamanna-rumee-e-D1-RNYzz-Uxc-unsplash.jpg',
+    img: 'https://i.ibb.co/L6ch4R7/mohamadreza-khashay-ziub-UDop-Hmc-unsplash.jpg',
   },
   {
     id: 2,
-    img: 'https://i.ibb.co/G0twGXk/charlesdeluvio-FK81rxil-UXg-unsplash.jpg',
+    img: 'https://i.ibb.co/NSMGpPk/junko-nakase-Q-72wa9-7-Dg-unsplash.jpg',
+  },
+  {
+    id: 3,
+    img: 'https://i.ibb.co/vZy9szP/jakob-owens-Bm-H09w-Ak-Ja8-unsplash.jpg',
+  },
+  {
+    id: 4,
+    img: 'https://i.ibb.co/mJFxGwT/tamara-bellis-Iw-VRO3-TLj-Lc-unsplash.jpg',
+  },
+  {
+    id: 5,
+    img: 'https://i.ibb.co/dDkWdM3/imani-bahati-Lx-Vx-PA1-LOVM-unsplash.jpg',
+  },
+  {
+    id: 6,
+    img: 'https://i.ibb.co/LP4CgWw/irene-kredenets-dw-Ki-Hoqqxk8-unsplash.jpg',
+  },
+  {
+    id: 7,
+    img: 'https://i.ibb.co/nmbBkvg/jens-kreuter-PKnn-n-XCNhs-unsplash.jpg',
+  },
+  {
+    id: 8,
+    img: 'https://i.ibb.co/X7MKgyx/eliud-gil-samaniego-1b-PEr-RSKco-unsplash.jpg',
   },
 ];
 
