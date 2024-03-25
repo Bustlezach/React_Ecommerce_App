@@ -9,7 +9,8 @@ import styled from 'styled-components'
 
 
 const Info = styled.div`
- display: none;
+ opacity: 0;
+ display: flex;
  width: 100%;
  height: 100%;
  position: absolute;
@@ -35,7 +36,7 @@ const Container = styled.div`
   position: relative;
 
   &:hover ${Info}{
-    display: flex;
+    opacity: 1;
   }
 `;
 
