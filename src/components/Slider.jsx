@@ -58,6 +58,7 @@ const Wrapper = styled.div`
   height: 100%;
   display: flex;
   transform: translateX(${props => props.slideindex * -100}vw);
+  transition: all 1.5s;
 `;
 
 const Title = styled.h1`
