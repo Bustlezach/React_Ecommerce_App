@@ -21,3 +21,21 @@ export const sliderItems = [
     bg: 'fbf0f4',
   },
 ];
+
+export const categories = [
+  {
+    id: 0,
+    img: 'https://i.ibb.co/LrvsDqx/freestocks-3-Q3ts-J01nc-unsplash.jpg',
+    title: 'SUMMER SALE',
+  },
+  {
+    id: 1,
+    img: 'https://i.ibb.co/sKj7kkg/jacek-dylag-jo8-C9bt3uo8-unsplash.jpg',
+    title: 'WINTER SALE',
+  },
+  {
+    id: 2,
+    img: 'https://i.ibb.co/7N2rKzX/lucrezia-carnelos-w-Q9-Vu-P-Njr4-unsplash.jpg',
+    title: 'POPULAR SALE',
+  },
+];
