@@ -78,5 +78,8 @@ export const popularProducts = [
     id: 8,
     img: 'https://i.ibb.co/X7MKgyx/eliud-gil-samaniego-1b-PEr-RSKco-unsplash.jpg',
   },
+  {
+    id: 9,
+    img: 'https://i.ibb.co/b24k1S9/daniel-korpai-hb-TKIbu-Mm-BI-unsplash.jpg',
+  },
 ];
-
