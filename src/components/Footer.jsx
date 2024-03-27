@@ -119,9 +119,9 @@ const Footer = () => {
       </Center>
       <Right>
         <Title>Contact</Title>
-        <ContactItem><LocationCity/>Lokoja, Kogi State, Nigeria</ContactItem>
-        <ContactItem><Phone/>+234 90 7421 9117</ContactItem>
-        <ContactItem><Email/>Bustlezach01@gmail.com</ContactItem>
+        <ContactItem><LocationCity style={{marginRight: '10px'}} />Lokoja, Kogi State, Nigeria</ContactItem>
+        <ContactItem><Phone style={{marginRight: '10px'}} />+234 90 7421 9117</ContactItem>
+        <ContactItem><Email style={{marginRight: '10px'}} />Bustlezach01@gmail.com</ContactItem>
         <Payment src='https://i.ibb.co/Qfvn4z6/payment.png' />
       </Right>
     </Container>
