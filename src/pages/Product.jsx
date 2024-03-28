@@ -97,7 +97,18 @@ const Amount = styled.span`
   margin: 0px 10px;
 `;
 
-const Button = styled.button``;
+const Button = styled.button`
+  padding: 15px;
+  border: 2px solid teal;
+  font-weight: 500;
+  background-color: white;
+  cursor: pointer;
+  margin-left: 20px;
+
+  &:hover {
+    background-color: #f8f4f4;
+  }
+`;
 
 
 
