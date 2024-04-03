@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const { MongoClient } = require("mongodb");
 const dotenv = require('dotenv');
 
 
@@ -8,10 +8,10 @@ let dbConnection;
 
 module.exports = {
   connectToDb: (cb) => {
-    mongoose
+    MongoClient
     .connect(process.env.MONGO_URL)
-    .then(() => {
-      dbConnection = mongoose.connection;
+    .then((client) => {
+      dbConnection = client.db();
       console.log("Db connection is successful!");
       return cb();
     })

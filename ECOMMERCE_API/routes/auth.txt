@@ -1,0 +1,32 @@
+const router = require("express").Router();
+const User = require("../models/User");
+const db = require("../index")
+
+//REGISTER
+router.post("/register", async (request, response) => {
+  const users = [];
+
+  db.collection(User)
+
+
+  const { username, password, email } = request.body;
+  const newUser = new User(
+    {
+      username,
+      password,
+      email,
+    }
+  );
+
+  // response.send(newUser);
+
+  try{
+    const savedUser = await newUser.save({ timeout: 15000 });
+    response.status(200).json(savedUser);
+  } catch(err) {
+    response.status(500).json({error: err.message});
+  }
+});
+
+
+module.exports = router

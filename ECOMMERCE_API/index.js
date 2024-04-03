@@ -5,20 +5,28 @@ const authRoute = require("./routes/auth");
 const { connectToDb, getDb } = require("./db");
 
 
+
+// Db connection
 let db;
+const PORT = process.env.PORT || 27017;
 
 connectToDb((err) => {
   if (!err) {
-    app.listen(process.env.PORT, () => {
+    db = getDb();
+    app.listen(PORT, () => {
       console.log("App running!");
-      console.log("App listening on port: " + process.env.PORT);
+      console.log("App listening on port: " + PORT);
       console.log("Terminate App with 'CTRL + C'");
     });
-    db = getDb();
   }
 })
 
+
+// middleware and routes
 app.use(express.json());
 app.use("/api/auth", authRoute);
 app.use("/api/users", userRoute);
 
+app.get("/api", (req, res) => {
+  res.status(200).send("Welcome to my shop API ✨🎉🏎")
+})
