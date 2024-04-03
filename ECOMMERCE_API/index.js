@@ -1,24 +1,24 @@
 const express = require("express");
 const app = express();
-const mongoose = require("mongoose");
-const dotenv = require("dotenv");
 const userRoute = require("./routes/user");
 const authRoute = require("./routes/auth");
+const { connectToDb, getDb } = require("./db");
 
 
-dotenv.config();
+let db;
 
-mongoose
-.connect(process.env.MONGO_URL)
-  .then(() => console.log('DB connection successful'))
-  .catch((err) => {
-    console.log(err);
-  });
+connectToDb((err) => {
+  if (!err) {
+    app.listen(process.env.PORT, () => {
+      console.log("App running!");
+      console.log("App listening on port: " + process.env.PORT);
+      console.log("Terminate App with 'CTRL + C'");
+    });
+    db = getDb();
+  }
+})
 
 app.use(express.json());
 app.use("/api/auth", authRoute);
 app.use("/api/users", userRoute);
 
-app.listen(process.env.PORT, () => {
-  console.log("Server running! Terminate with 'CTRL + C'");
-});
