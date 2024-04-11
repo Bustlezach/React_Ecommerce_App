@@ -1,6 +1,42 @@
 const router = require("express").Router();
 const { ObjectId } = require("mongodb");
 const {getDb} = require("../db");
+const { verify } = require("jsonwebtoken");
+const {verifyToken, verifyTokenAuthorization} = require("./verifyToken");
+
+
+
+router.put("/:id", verifyTokenAuthorization, async (req, res) => {
+  const db = getDb();
+
+  if(req.body.password) {
+    req.body.password = CryptoJS.AES.encrypt(
+      req.body.password, 
+      process.env.PASS_SEC
+    ).toString();
+  }
+
+ 
+ try{
+  const updateduser = await db.collection("users")
+  .findOneAndUpdate(
+    {_id: new ObjectId(req.params.id)},
+    {$set: req.body},
+    { returnDocument: 'after' }
+  );
+
+  if (updateduser) {
+    res.status(200).send(updateduser);
+  } else {
+    res.status(404).send("User not found")
+  }
+
+ }
+ catch(err) {
+  console.error(err);
+  res.status(500).send({message: "Internal server error"})
+ }
+});
 
 
 router.get("/", (req, res) => {
