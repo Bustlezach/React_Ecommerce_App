@@ -6,13 +6,16 @@ const { getDb } = require("../db");
 let userId;
 
 //REGISTER
-router.post("/register", async (request, response) => {
-  const { username, password, email } = await request.body;
+router.post("/register", (request, response) => {
+  const { username, password, email } = request.body;
   const db = getDb();
   const newUser = {
       username,
       password: CryptoJS.AES.encrypt(password, process.env.PASS_SEC).toString(),
       email,
+      isAdmin: false,
+      createdAt: getCurrentTimestamp(),
+      updatedAt: getCurrentTimestamp(),
     };
 
     if (!username || !password || !email) {

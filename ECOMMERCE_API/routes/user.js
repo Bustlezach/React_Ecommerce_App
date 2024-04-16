@@ -2,10 +2,42 @@ const router = require("express").Router();
 const { ObjectId } = require("mongodb");
 const {getDb} = require("../db");
 const { verify } = require("jsonwebtoken");
-const {verifyToken, verifyTokenAuthorization} = require("./verifyToken");
+const {verifyToken, verifyTokenAuthorization, verifyTokenAndAdmin} = require("./verifyToken");
 
 
 
+// GET USER STATS
+router.get("/stats", verifyTokenAndAdmin, async (req, res) => {
+  const db = getDb();
+  const date = new Date();
+  const lastYear = new Date(date.setFullYear(date.getFullYear() - 1));
+
+  // res.status(200).send("Display stats here")
+  try {
+    const data = await db.collection("users").aggregate([
+      {$match: {createAt: {$gte: lastYear}}},
+      {
+        $project: {
+          month: { $month: "$createdAt"},
+        },
+      },
+      {
+        $group: {
+          _id: "$month",
+          total: {$sum: 1},
+        }
+      }
+    ]).toArray();
+    const countUsers = await db.collection("users").find().count();
+    res.status(200).send({...data, countUsers});
+  } catch (err) {
+    console.error(err);
+    res.status(500).send({ message: err });
+  }
+});
+
+
+// Edit user
 router.put("/:id", verifyTokenAuthorization, async (req, res) => {
   const db = getDb();
 
@@ -39,26 +71,70 @@ router.put("/:id", verifyTokenAuthorization, async (req, res) => {
 });
 
 
-router.get("/", (req, res) => {
+// Delete
+router.delete("/:id", verifyTokenAuthorization, (req, res) => {
   const db = getDb();
-  const users = [];
-
   db.collection("users")
-    .find()
-    .sort({username: 1})
-    .forEach(user => users.push(user))
-    .then(() => {
-      res.status(200).send(users)
+    .deleteOne({_id: new ObjectId(req.params.id)})
+    .then(result => {
+      res.status(200).send({
+        result,
+        message: "User has been deleted 🎱"
+      });
     })
     .catch(err => {
-      res.status(500).json({
-        Error: "Could not fetch the documents.",
-        message: err,
-      })
+      res.status(500).send({message: err});
     })
 })
 
-router.get("/:id", (req, res) => {
+
+// GET ALLUSER
+router.get("/", verifyTokenAndAdmin, async (req, res) => {
+  const db = getDb();
+
+  // const page = parseInt(req.query.page) || 0;
+  // const userPerPage = 10;
+
+  const query = req.query.new;
+
+  try{
+    // LIMIT
+    const users = query
+     ? await db.collection("users")
+        .find()
+        .sort({username:1})
+        .limit(5)
+        .toArray() 
+    :
+        await db.collection("users")
+        .find()
+        .sort({username: 1})
+        .toArray()
+
+    // PAGINATION
+    // const users = await db.collection("users")
+    //     .find()
+    //     .sort({username: 1})
+    //     .skip(page * userPerPage)
+    //     .limit(userPerPage)
+    //     .toArray()
+  
+
+      if(!users) {
+        res.status(403).send("No user");
+      }
+      res.status(200).send(users)
+  }
+  catch(err) {
+    res.status(500).json({
+      Error: "Could not fetch the documents.",
+      message: err,
+    })
+  }
+})
+
+// GET USER
+router.get("/:id", verifyTokenAndAdmin, (req, res) => {
   const db = getDb();
   if(!ObjectId.isValid(req.params.id)) {
     response.status(404).json({
@@ -68,8 +144,9 @@ router.get("/:id", (req, res) => {
 
   db.collection("users")
     .findOne({_id: new ObjectId(req.params.id)})
-    .then((doc) => {
-      res.status(200).send(doc)
+    .then((user) => {
+      const {password, ...others} = user;
+      res.status(200).send({...others})
     })
     .catch(() => {
       res.status(500).send("Could not find user.")
