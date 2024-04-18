@@ -1,8 +1,10 @@
 const express = require("express");
 const app = express();
-const userRoute = require("./routes/user");
-const authRoute = require("./routes/auth");
-const productsRoute = require("./routes/products");
+const userRoute = require("./routes/User");
+const authRoute = require("./routes/Auth");
+const productsRoute = require("./routes/Products");
+const cartRoute = require("./routes/Cart");
+const orderRoute = require("./routes/Order");
 const { connectToDb, getDb } = require("./db");
 
 
@@ -28,6 +30,9 @@ app.use(express.json());
 app.use("/api/auth", authRoute);
 app.use("/api/products", productsRoute);
 app.use("/api/users", userRoute);
+app.use("/api/carts", cartRoute);
+app.use("/api/orders", orderRoute);
+
 
 app.get("/api", (req, res) => {
   res.status(200).send("Welcome to my shop API ✨🎉🏎")

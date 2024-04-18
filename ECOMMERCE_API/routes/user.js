@@ -53,7 +53,7 @@ router.put("/:id", verifyTokenAuthorization, async (req, res) => {
   const updateduser = await db.collection("users")
   .findOneAndUpdate(
     {_id: new ObjectId(req.params.id)},
-    {$set: req.body},
+    {$set: { ...req.body, updatedAt: new Date() }},
     { returnDocument: 'after' }
   );
 
