@@ -5,7 +5,9 @@ const authRoute = require("./routes/Auth");
 const productsRoute = require("./routes/Products");
 const cartRoute = require("./routes/Cart");
 const orderRoute = require("./routes/Order");
+const stripeRoute = require("./routes/Stripe");
 const { connectToDb, getDb } = require("./db");
+const cors = require('cors');
 
 
 
@@ -26,12 +28,14 @@ connectToDb((err) => {
 
 
 // middleware and routes
+app.use(cors());
 app.use(express.json());
 app.use("/api/auth", authRoute);
 app.use("/api/products", productsRoute);
 app.use("/api/users", userRoute);
 app.use("/api/carts", cartRoute);
 app.use("/api/orders", orderRoute);
+app.use("/api/checkout", stripeRoute);
 
 
 app.get("/api", (req, res) => {

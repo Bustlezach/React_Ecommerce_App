@@ -12,7 +12,7 @@ function App() {
   return (
     <div className="App">
       {/* <ComponentOne oruko="Nigerian movie" oda="Blue" /> */}
-      <Cart />
+      <Register />
     </div>
   );
 }
