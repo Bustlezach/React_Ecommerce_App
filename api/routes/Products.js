@@ -83,19 +83,20 @@ router.get("/", async (req, res) => {
     if (qNew) {
       products = await db.collection("products")
       .find().sort({createdAt: -1})
-      .limit(5)
+      .limit(8)
       .toArray();
     } else if (qCategory) {
       products = await db.collection("products")
       .find({category: qCategory})
       .sort({createdAt: -1})
-      .limit(5)
+      .limit(8)
       .toArray();
     } else {
-      products = await db.collection("products").
-      find().
-      sort({createdAt: -1}).
-      toArray();
+      products = await db.collection("products")
+      .find()
+      .sort({createdAt: -1})
+      .limit(8)
+      .toArray();
     }
 
       res.status(200).send(products)
@@ -109,7 +110,7 @@ router.get("/", async (req, res) => {
 })
 
 // GET PRODUCT
-router.get("/:id", (req, res) => {
+router.get("/find/:id", (req, res) => {
   const db = getDb();
 
   db.collection("products")

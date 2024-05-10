@@ -1,6 +1,25 @@
 import React from 'react'
 import styled from 'styled-components'
 import { mobile } from '../responsive';
+import { BrowserRouter as Router, Link } from 'react-router-dom';
+
+
+const CategoryItem = ({item}) => {
+  return (
+    <Container>
+      <Link to={`/products/${item.category}`}>
+        <Image src={item.img} />
+        <Info>
+          <Title>{item.title}</Title>
+          <Button>SHOP NOW</Button>
+        </Info>
+      </Link>
+    </Container>
+  )
+}
+
+export default CategoryItem;
+
 
 const Container = styled.div`
   flex: 1;
@@ -18,7 +37,7 @@ const Image = styled.img`
 
 const Title = styled.h1`
   color: white;
-  margin-buttom: 20px;
+  margin-bottom: 20px;
 `;
 
 const Info = styled.div`
@@ -42,16 +61,3 @@ const Button = styled.button`
   font-weight: 600;
 `;
 
-const CategoryItem = ({item}) => {
-  return (
-    <Container>
-      <Image src={item.img} />
-      <Info>
-        <Title>{item.title}</Title>
-        <Button>SHOP NOW</Button>
-      </Info>
-    </Container>
-  )
-}
-
-export default CategoryItem

@@ -27,16 +27,19 @@ export const categories = [
     id: 0,
     img: 'https://i.ibb.co/gVgQHXf/the-nix-company-4-Hmj9gky-M6c-unsplash.jpg',
     title: 'SHIRT STYLE!',
+    category: 'women',
   },
   {
     id: 1,
     img: 'https://i.ibb.co/XZDmNkB/tamanna-rumee-e-D1-RNYzz-Uxc-unsplash.jpg',
     title: 'LOUNGEWEAR LOVE',
+    category: 'coat',
   },
   {
     id: 2,
     img: 'https://i.ibb.co/G0twGXk/charlesdeluvio-FK81rxil-UXg-unsplash.jpg',
     title: "MEN'S WEAR",
+    category: 'jeans',
   },
 ];
 

@@ -12,7 +12,7 @@ module.exports = {
     .connect(process.env.MONGO_URL)
     .then((client) => {
       dbConnection = client.db();
-      console.log("Db connection is successful!");
+      console.log("Datbase connected successful!");
       return cb();
     })
     .catch((err) => {
