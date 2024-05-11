@@ -8,7 +8,8 @@ import { Add, Remove } from "@mui/icons-material";
 import { mobile } from "../responsive";
 import { useEffect, useState } from "react";
 import { publicRequest } from "../requestMethods";
-import Cart from "./Cart";
+import { addProduct } from "../redux/cartRedux";
+import { useDispatch } from "react-redux";
 
 
 const Product = () => {
@@ -19,6 +20,8 @@ const Product = () => {
   const [quantity, setQuantity] = useState(1);
   const [colour, setColour] = useState("");
   const [size, setSize] = useState("");
+
+  const dispatch = useDispatch();
 
 
 
@@ -34,8 +37,13 @@ const Product = () => {
     }
   };
 
-  const handleClick = ({product, quantity, colour, size}) => {
-    <Link to="Cart" />
+  const handleClick = () => {
+    dispatch(
+      addProduct({
+        product,
+        quantity
+      })
+    );
   };
 
 
