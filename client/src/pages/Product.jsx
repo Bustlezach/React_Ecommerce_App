@@ -1,4 +1,4 @@
-import { useLocation } from "react-router-dom";
+import { useLocation, Link } from "react-router-dom";
 import styled from "styled-components";
 import Navbar from "../components/Navbar";
 import Announcement from "../components/Announcement";
@@ -8,20 +8,43 @@ import { Add, Remove } from "@mui/icons-material";
 import { mobile } from "../responsive";
 import { useEffect, useState } from "react";
 import { publicRequest } from "../requestMethods";
+import Cart from "./Cart";
+
 
 const Product = () => {
   const location = useLocation();
   const id = location.pathname.split("/")[2];
 
   const [product, setProduct] = useState({});
-  const [colour, setColour] = useState([]);
+  const [quantity, setQuantity] = useState(1);
+  const [colour, setColour] = useState("");
+  const [size, setSize] = useState("");
+
+
+
+
+  const handleQuantity = (type) => {
+    if(type === "add") {
+      setQuantity(prev => (prev + 1));
+    } else {
+      if (quantity === 1) {
+        return;
+      }
+      setQuantity(prev => (prev - 1));
+    }
+  };
+
+  const handleClick = ({product, quantity, colour, size}) => {
+    <Link to="Cart" />
+  };
+
+
 
   useEffect(() => {
     const getProduct = async () => {
       try {
         const res = await publicRequest.get(`/products/find/${id}`);
         setProduct((prev) => res.data.product);
-        setColour((prev) => res.data.product.color);
       } catch (err) {
         console.log(err);
       }
@@ -53,28 +76,26 @@ const Product = () => {
           <FilterContainer>
             <Filter>
               <FilterTitle>Colour</FilterTitle>
-              {colour.map((c) => (
-                <FilterColor color={c} key={c} />
+              {product.color?.map((c) => (
+                <FilterColor color={c} key={c} onClick={()=>setColour(prev => (c)) }/>
               ))}
             </Filter>
             <Filter>
               <FilterTitle>Size</FilterTitle>
-              <FilterSize>
-                <FilterSizeOption>XS</FilterSizeOption>
-                <FilterSizeOption>S</FilterSizeOption>
-                <FilterSizeOption>M</FilterSizeOption>
-                <FilterSizeOption>L</FilterSizeOption>
-                <FilterSizeOption>XL</FilterSizeOption>
+              <FilterSize onChange={(event) => setSize(prev => event.target.value)} >
+                {product.size?.map((s) => (
+                  <FilterSizeOption  key={s}>{s}</FilterSizeOption>
+                ))}
               </FilterSize>
             </Filter>
           </FilterContainer>
           <AddContainer>
             <AmountContainer>
-              <Remove />
-              <Amount>1</Amount>
-              <Add />
+              <Remove onClick={() => handleQuantity("minus")} />
+              <Amount>{quantity}</Amount>
+              <Add onClick={() => handleQuantity("add")} />
             </AmountContainer>
-            <Button>ADD TO CART</Button>
+            <Button onClick={handleClick}>ADD TO CART</Button>
           </AddContainer>
         </InfoContainer>
       </Wrapper>
