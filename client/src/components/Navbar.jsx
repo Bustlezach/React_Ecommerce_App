@@ -1,8 +1,9 @@
 import { Search, ShoppingCartOutlined } from "@mui/icons-material";
-import React, { useEffect } from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { mobile } from "../responsive";
 import { useSelector } from "react-redux";
+
 
 const Navbar = () => {
   const quantity = useSelector((state) => state.cart.quantity);
@@ -23,13 +24,15 @@ const Navbar = () => {
         <Right>
           <MenuItem>REGISTER</MenuItem>
           <MenuItem>sign in</MenuItem>
-          <MenuItem>
-            <ShoppingCartOutlined color="action" />
-            <Shoppingquantity>{quantity}</Shoppingquantity>
-            {/* <Badge badgecontent={quantity} color="primary">
+          <Link to="/cart">
+            <MenuItem>
+              <ShoppingCartOutlined color="action" />
+              <Shoppingquantity>{quantity}</Shoppingquantity>
+              {/* <Badge badgecontent={quantity} color="primary">
               <ShoppingCartOutlined color="action" />
             </Badge> */}
-          </MenuItem>
+            </MenuItem>
+          </Link>
         </Right>
       </Wrapper>
     </Container>
@@ -110,7 +113,9 @@ const Shoppingquantity = styled.span`
   right: 22px;
   color: white;
   font-weight: 600;
-  padding: 3px;
+  width: 18px;
+  height: 18px;
+  padding: 1px;
   background-color: #0a8b62;
   text-align: center;
   border-radius: 50%;

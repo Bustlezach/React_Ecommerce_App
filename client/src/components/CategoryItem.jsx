@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { mobile } from '../responsive';
-import { BrowserRouter as Router, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 
 const CategoryItem = ({item}) => {
