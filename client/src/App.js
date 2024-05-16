@@ -8,9 +8,10 @@ import Cart from "./pages/Cart";
 import Success from "./pages/Success";
 import { Navigate } from "react-router";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 function App() {
-  const user = true;
+  const user = useSelector((state) => state.user.currentUser);
 
   const router = createBrowserRouter([
     {
@@ -18,50 +19,47 @@ function App() {
       element: <Home />,
     },
     {
-      path:"/product/:id",
+      path: "/product/:id",
       element: <Product />,
     },
     {
-      path:"/products/:category",
+      path: "/products/:category",
       element: <Productlist />,
     },
     {
-      path:"/register",
+      path: "/register",
       element: user ? <Navigate to="/" replace /> : <Register />,
     },
     {
-      path:"/login",
+      path: "/login",
       element: user ? <Navigate to="/" replace /> : <Login />,
     },
     {
-      path:"/cart",
+      path: "/cart",
       element: <Cart />,
     },
     {
-      path:"/success",
+      path: "/success",
       element: <Success />,
     },
   ]);
 
-  return (
-    <RouterProvider router={router} />
-  );
+  return <RouterProvider router={router} />;
 }
 
 export default App;
 
-
-    // <Routes>
-    //   <Route index Component={Home}></Route>
-    //   <Route path="/product/:id" Component={Product}></Route>
-    //   <Route path="/products/:category" Component={Productlist}></Route>
-    //   <Route
-    //     path="/register"
-    //     element={user ? <Navigate to="/" replace /> : <Register />}
-    //   ></Route>
-    //   <Route
-    //     path="/login"
-    //     element={user ? <Navigate to="/" replace /> : <Login />}
-    //   ></Route>
-    //   <Route path="/cart" Component={Cart}></Route>
-    // </Routes>
+// <Routes>
+//   <Route index Component={Home}></Route>
+//   <Route path="/product/:id" Component={Product}></Route>
+//   <Route path="/products/:category" Component={Productlist}></Route>
+//   <Route
+//     path="/register"
+//     element={user ? <Navigate to="/" replace /> : <Register />}
+//   ></Route>
+//   <Route
+//     path="/login"
+//     element={user ? <Navigate to="/" replace /> : <Login />}
+//   ></Route>
+//   <Route path="/cart" Component={Cart}></Route>
+// </Routes>

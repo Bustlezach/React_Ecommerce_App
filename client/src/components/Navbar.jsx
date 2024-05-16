@@ -4,7 +4,6 @@ import styled from "styled-components";
 import { mobile } from "../responsive";
 import { useSelector } from "react-redux";
 
-
 const Navbar = () => {
   const quantity = useSelector((state) => state.cart.quantity);
 
@@ -19,11 +18,17 @@ const Navbar = () => {
           </SearchContainer>
         </Left>
         <Center>
-          <Logo>BUSTLE.</Logo>
+          <StyledLink to="/">
+            <Logo>BUSTLE.</Logo>
+          </StyledLink>
         </Center>
         <Right>
-          <MenuItem>REGISTER</MenuItem>
-          <MenuItem>sign in</MenuItem>
+          <StyledLink to="/register">
+            <MenuItem>REGISTER</MenuItem>
+          </StyledLink>
+          <StyledLink to="/login">
+            <MenuItem>sign in</MenuItem>
+          </StyledLink>
           <Link to="/cart">
             <MenuItem>
               <ShoppingCartOutlined color="action" />
@@ -120,4 +125,8 @@ const Shoppingquantity = styled.span`
   text-align: center;
   border-radius: 50%;
   z-index: -2;
+`;
+
+const StyledLink = styled(Link)`
+  text-decoration: none;
 `;

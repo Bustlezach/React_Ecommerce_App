@@ -1,5 +1,58 @@
-import styled from "styled-components"
+import styled from "styled-components";
 import { mobile } from "../responsive";
+import { useState } from "react";
+import { login } from "../redux/apiCalls";
+import { useDispatch, useSelector } from "react-redux";
+
+const Login = () => {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const dispatch = useDispatch();
+  const { isFetching, error } = useSelector((state) => state.user);
+  const handleUsername = function (event) {
+    const { value } = event.target;
+    setUsername((prev) => value);
+  };
+  const handlePassword = function (event) {
+    const { value } = event.target;
+    setPassword((prev) => value);
+  };
+  const handleClick = function (event) {
+    event.preventDefault();
+    login(dispatch, { username, password });
+    setUsername("");
+    setPassword("");
+  };
+
+  return (
+    <Container>
+      <Wrapper>
+        <Title>SIGN IN</Title>
+        <Form>
+          <Input
+            placeholder="username"
+            onChange={handleUsername}
+            value={username}
+          />
+          <Input
+            placeholder="password"
+            type="password"
+            onChange={handlePassword}
+            value={password}
+          />
+          <Button onClick={handleClick} disabled={isFetching}>
+            LOGIN
+          </Button>
+          {error && <Error>Something went wrong ...</Error>}
+          <Link>DO NOT YOU REMEMBER THE PASSWORD?</Link>
+          <Link>CREATE A NEW ACCOUNT</Link>
+        </Form>
+      </Wrapper>
+    </Container>
+  );
+};
+
+export default Login;
 
 const Container = styled.div`
   width: 100vw;
@@ -14,7 +67,7 @@ const Wrapper = styled.div`
   width: 25%;
   padding: 20px;
   background-color: white;
-  ${mobile({width: "75vw"})};
+  ${mobile({ width: "75vw" })};
 `;
 
 const Title = styled.h1`
@@ -42,7 +95,7 @@ const Button = styled.button`
   background-color: teal;
   color: white;
   font-size: 20px;
-  cursor: pointer;
+  cursor: ${(props) => (props.disabled ? "not-allowed" : "pointer")};
 `;
 
 const Link = styled.a`
@@ -52,24 +105,6 @@ const Link = styled.a`
   cursor: pointer;
 `;
 
-
-const Login = () => {
-  return (
-    <Container>
-      <Wrapper>
-        <Title>
-          SIGN IN
-        </Title>
-        <Form>
-          <Input placeholder='username' />
-          <Input placeholder='password' />
-          <Button>LOGIN</Button>
-          <Link>DO NOT YOU REMEMBER THE PASSWORD?</Link>
-          <Link>CREATE A NEW ACCOUNT</Link>
-        </Form>
-      </Wrapper>
-    </Container>
-  )
-}
-
-export default Login
+const Error = styled.span`
+  color: red;
+`;

@@ -103,18 +103,22 @@ const Cart = () => {
               <SummaryItemText>Total</SummaryItemText>
               <SummaryItemPrice>$ {cart.total}</SummaryItemPrice>
             </SummaryItem>
-            <StripeCheckout
-              name="Bustlezach shop"
-              image="https://i.ibb.co/fCfC7MV/avatar.png"
-              billingAddress
-              shippingAddress
-              description={`Your total is $${cart.total}`}
-              amount={cart.total * 100}
-              token={onToken}
-              stripeKey={KEY}
-            >
-              <Button>CHECKOUT NOW</Button>
-            </StripeCheckout>
+            {stripeToken ? (
+              <span><i class="fa-li fa fa-spinner fa-spin"></i> Please wait...</span>
+            ) : (
+              <StripeCheckout
+                name="Bustlezach shop"
+                image="https://i.ibb.co/fCfC7MV/avatar.png"
+                billingAddress
+                shippingAddress
+                description={`Your total is $${cart.total}`}
+                amount={cart.total * 100}
+                token={onToken}
+                stripeKey={KEY}
+              >
+                <Button>CHECKOUT NOW</Button>
+              </StripeCheckout>
+            )}
           </Summary>
         </BottomContainer>
       </Wrapper>
