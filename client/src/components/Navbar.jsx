@@ -18,9 +18,9 @@ const Navbar = () => {
           </SearchContainer>
         </Left>
         <Center>
-          <StyledLink to="/">
+          <LinkedHeader to="/">
             <Logo>BUSTLE.</Logo>
-          </StyledLink>
+          </LinkedHeader>
         </Center>
         <Right>
           <StyledLink to="/register">
@@ -127,6 +127,18 @@ const Shoppingquantity = styled.span`
   z-index: -2;
 `;
 
+const LinkedHeader = styled(Link)`
+  text-decoration: none;
+  color: teal;
+`;
+
 const StyledLink = styled(Link)`
   text-decoration: none;
+  color: #414040;
+  :hover {
+    border: transparent 1px solid;
+    border-image: linear-gradient(45deg, teal, red) 1;
+    padding: 0.3rem;
+    transition: 0.2s ease-in;
+  }
 `;

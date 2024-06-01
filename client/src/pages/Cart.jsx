@@ -9,6 +9,8 @@ import StripeCheckout from "react-stripe-checkout";
 import { useEffect, useState } from "react";
 import { userRequest } from "../requestMethods";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { addStripe } from "../redux/stripeRedux";
 
 const KEY = process.env.REACT_APP_STRIPE;
 
@@ -16,11 +18,11 @@ const Cart = () => {
   const cart = useSelector((state) => state.cart);
   const [stripeToken, setStripeToken] = useState("");
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const onToken = function (token) {
     setStripeToken(token);
   };
-  console.log(stripeToken.id);
 
   useEffect(() => {
     const makeRequest = async function () {
@@ -30,14 +32,17 @@ const Cart = () => {
           amount: cart.total * 100,
           currency: "usd",
         });
-        console.log("Payment successful!", res.data);
-        navigate("/success", { data: res.data });
+        dispatch(addStripe(res.data));
+        // console.log("Payment successful!", res.data);
+        navigate("/success", {
+          state: { stripeData: res.data, products: cart },
+        });
       } catch (err) {
         console.log(err);
       }
     };
     stripeToken && makeRequest();
-  }, [stripeToken, navigate, cart.total]);
+  }, [stripeToken, navigate, cart, dispatch]);
 
   return (
     <Container>
@@ -104,7 +109,9 @@ const Cart = () => {
               <SummaryItemPrice>$ {cart.total}</SummaryItemPrice>
             </SummaryItem>
             {stripeToken ? (
-              <span><i class="fa-li fa fa-spinner fa-spin"></i> Please wait...</span>
+              <span>
+                <i class="fa-li fa fa-spinner fa-spin"></i> Please wait...
+              </span>
             ) : (
               <StripeCheckout
                 name="Bustlezach shop"
